@@ -3,6 +3,9 @@ from tkinter import filedialog
 import subprocess
 import os
 
+# exe 파일에서 실행될 경우의 상대경로로 설정
+cwebp_path = os.path.join(os.path.dirname(__file__), 'cwebp.exe')
+
 def convert_image():
     # 파일 대화상자 열기
     filenames = filedialog.askopenfilenames()
@@ -13,7 +16,7 @@ def convert_image():
     for filename in filenames:
         # 변환 명령어 실행
         output_filename = '"' + os.path.splitext(filename)[0] + '.webp' + '"'
-        command = f'cwebp "{filename}" {option} -o {output_filename}'
+        command = f'"{cwebp_path}" "{filename}" {option} -o {output_filename}'
         subprocess.call(command, shell=True)
 
         # 변환 결과 출력

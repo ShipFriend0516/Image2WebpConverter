@@ -8,7 +8,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('icon.ico', '.')],
+    datas=[('icon.ico', '.'), ('cwebp.exe', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
