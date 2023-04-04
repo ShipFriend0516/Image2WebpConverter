@@ -19,3 +19,8 @@
 
 ![image](https://user-images.githubusercontent.com/98446924/229772499-b9b564b1-ea36-4b30-b2c6-e446c277b4b4.png)
 
+
+### 추가 예정
+
+1. 드래그&드랍
+2. 변환시 폴더 생성
