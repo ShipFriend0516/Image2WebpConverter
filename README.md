@@ -11,14 +11,14 @@
 
 
 
-## 변환 전
+## 메인화면
 
-![image](https://user-images.githubusercontent.com/98446924/229772416-e8de39d5-b4c5-4ba8-8e1c-3aeab8fd4bee.png)
+![image](https://user-images.githubusercontent.com/98446924/230772180-9e29a889-e996-423a-88a4-4dfcea714abe.png)
 
-## 변환 후
-
-![image](https://user-images.githubusercontent.com/98446924/229772499-b9b564b1-ea36-4b30-b2c6-e446c277b4b4.png)
-
+## 기능
+선택 이미지를 webp로 변환
+다수 선택 가능, 다수 선택시 프로그레스바로 변환 진행상황 확인 가능
+이미지 파일 폴더에 "변환된 이미지" 폴더 생성 후 저장
 
 ### 추가 예정
 
