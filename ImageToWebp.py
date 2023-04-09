@@ -22,7 +22,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         #아래는 Qt Designer로 만든 UI 정보
         Dialog.setObjectName("Dialog")
-        Dialog.resize(500, 350)
+        Dialog.setFixedSize(500,350)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -87,7 +87,6 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy)
-        self.frame.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.frame.setAcceptDrops(True)
         self.frame.setAutoFillBackground(False)
         self.frame.setStyleSheet("border: 0.5px solid gray;")
@@ -100,9 +99,10 @@ class Ui_Dialog(object):
         font.setFamily("G마켓 산스 TTF Light")
         font.setPointSize(12)
         self.pushButton.setFont(font)
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.pushButton.setStyleSheet("border: 0;\n"
 "background-color: rgb(0,0,0,0);\n"
-"padding: 60%;")
+"padding: 50%;")
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.convert_image)
 
@@ -135,7 +135,7 @@ class Ui_Dialog(object):
     def convert_image(self):
         # 파일 대화상자 열기
         file_dialog = QFileDialog(Dialog, "이미지 파일 선택",os.path.expanduser("~/Downloads"))
-        file_dialog.setNameFilters(["이미지 파일 (*.jpg *.jpeg *.png *.gif)"])
+        file_dialog.setNameFilters(["이미지 파일 (*.jpg *.jpeg *.png *.gif)","All Files (*)"])
         file_dialog.setFileMode(QFileDialog.ExistingFiles)
         if file_dialog.exec_() == QFileDialog.Accepted:
             filenames = file_dialog.selectedFiles()
@@ -160,9 +160,9 @@ class Ui_Dialog(object):
         # 이미지 파일이 없을 경우 경고 메시지 출력
         if not image_files:
             self.pushButton.setText("선택된 파일에 이미지 파일이 없습니다.")
-        else:
+        else: # 이미지 파일이 존재할 경우 변환을 시작함
             for filename in image_files:
-                output_filename = '"' + os.path.splitext(filename)[0] + '.webp' + '"'
+                output_filename = self.makeFolder(filename)
                 if os.path.splitext(filename)[1].lower() == '.gif':
                     command = f'"{cwebp_path}" frame_*.webp -o {output_filename}'
                 else:
@@ -176,7 +176,22 @@ class Ui_Dialog(object):
             if len(image_files) == 1:
                 self.pushButton.setText(f"{os.path.basename(output_filename)[:-1]}으로 변환되었습니다.")
             else:
-                self.pushButton.setText(f"선택한 파일들이 모두 변환되었습니다.")
+                self.pushButton.setText(f"선택한 파일들이 모두 변환되었습니다.\n"
+                                        f"성공:{len(image_files)}개 실패:{len(unsupported_files)}개")
+
+    def makeFolder(self, filename):
+        # 작업을 완료한 뒤 폴더를 생성해서 그 곳에 완성물을 저장하기 위한 함수
+        # 폴더가 없다면 만들고, 있다면 넘어감
+        folderName = "변환된 이미지"
+        output_directory = os.path.join(os.path.dirname(filename), folderName)
+        try:
+            os.mkdir(output_directory)
+        except FileExistsError:
+            pass
+
+        output_filename = os.path.join(output_directory, os.path.basename(filename))
+        output_filename = '"' + os.path.splitext(output_filename)[0] + '.webp' + '"'
+        return output_filename
 
 
 if __name__ == "__main__":
