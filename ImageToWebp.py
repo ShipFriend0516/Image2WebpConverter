@@ -9,14 +9,24 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 import sys
 import os
 import subprocess
+import platform
+
+def is_macos():
+    system_info = platform.system()
+    return system_info == "Darwin"
 
 # exe 파일에서 실행될 경우의 상대경로로 설정
-cwebp_path = os.path.join(os.path.dirname(__file__), 'cwebp.exe')
-webpmux_path = os.path.join(os.path.dirname(__file__), 'webpmux.exe')
+if(is_macos()):
+    print('이 운영체제는 맥입니다.')
+    cwebp_path = os.path.join(os.path.dirname(__file__), 'cwebp')
+else:
+    print('이 운영체제는 윈도우입니다.')
+    cwebp_path = os.path.join(os.path.dirname(__file__), 'cwebp.exe')
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -128,9 +138,6 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "이미지 변환기"))
         self.pushButton.setText(_translate("Dialog", "클락하여 파일 추가"))
 
-
-
-
     # 이미지 파일을 WEBP로 변환하는 함수
     def convert_image(self):
         # 파일 대화상자 열기
@@ -155,6 +162,8 @@ class Ui_Dialog(object):
             else:
                 # 이미지 파일이 아닌 경우 지원하지 않는 파일 리스트에 추가
                 unsupported_files.append(filename)
+
+        #프로그레스바 최대치를 이미지 파일 수로 설정
         self.progressBar.setMaximum(len(image_files))
 
         # 이미지 파일이 없을 경우 경고 메시지 출력
@@ -164,11 +173,13 @@ class Ui_Dialog(object):
             for filename in image_files:
                 output_filename = self.makeFolder(filename)
                 if os.path.splitext(filename)[1].lower() == '.gif':
-                    command = f'"{cwebp_path}" frame_*.webp -o {output_filename}'
+                    command = f'"{cwebp_path}" "{filename}" {option} -o {output_filename}'
                 else:
                     command = f'"{cwebp_path}" "{filename}" {option} -o {output_filename}'
+                # 변환 완료 후 프로그레스바 수치 + 1
                 progressNum += 1
                 self.progressBar.setValue(progressNum)
+
                 subprocess.call(command, shell=True)
 
 
