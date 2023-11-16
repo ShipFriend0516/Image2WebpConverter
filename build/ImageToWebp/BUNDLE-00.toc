@@ -1,0 +1,3 @@
+([('ImageToWebp',
+   '/Users/jeongwoo/PycharmProjects/Image2WebpConverter/dist/ImageToWebp',
+   'EXECUTABLE')],)
