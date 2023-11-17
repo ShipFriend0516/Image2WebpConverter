@@ -29,3 +29,5 @@ Window OS의 경우 dist 디렉토리 안의 ImageToWebp.exe 실행
 
 Mac OS의 경우 dist 디렉토리 안의 ImageToWebp 실행
 
+**만약 확인되지 않은 개발자 프로그램이라 안열리면 우클릭 후 열기 버튼 클릭**
+
