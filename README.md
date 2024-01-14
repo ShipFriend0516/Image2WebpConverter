@@ -15,7 +15,7 @@
 
 ## 메인화면
 
-![image](https://user-images.githubusercontent.com/98446924/230772180-9e29a889-e996-423a-88a4-4dfcea714abe.png)
+![image](https://github.com/ShipFriend0516/Image2WebpConverter/assets/98446924/a23dfc6a-5808-4070-bef4-c032ed24ef01)
 
 ## 기능
 선택 이미지를 webp로 변환
