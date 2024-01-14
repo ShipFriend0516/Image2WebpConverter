@@ -9,12 +9,15 @@
 
 import os
 import platform
+import shutil
 import subprocess
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 
+# 이미지파일 경로 설정
+icon_path = os.path.join(os.path.dirname(__file__), 'icon.ico')
 
 def is_macos():
     system_info = platform.system()
@@ -27,6 +30,16 @@ if(is_macos()):
 else:
     print('이 운영체제는 윈도우입니다.')
     cwebp_path = os.path.join(os.path.dirname(__file__), 'cwebp.exe')
+
+# temp_dir = '_temp'
+# os.makedirs(temp_dir, exist_ok=True)
+# shutil.copy(cwebp_path, temp_dir)
+# shutil.copy(icon_path, temp_dir)
+#
+# os.chdir(temp_dir)
+#
+# os.system('cwebp.exe ImageToWebp.py')
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -54,7 +67,7 @@ class Ui_Dialog(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         Dialog.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(icon_path), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setAutoFillBackground(False)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Dialog)
