@@ -1,38 +1,43 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+block_cipher = None
 
 a = Analysis(
-    ['ImageToWebp.py'],
+    ['imgconverter.py'],
     pathex=[],
-    binaries=[('cwebp', '.'), ('cwebp.exe', '.'), ('icon.ico', '.')],
-    datas=[],
+    binaries=[('cwebp.exe', '.')],  # cwebp.exe 파일 포함
+    datas=[('icon.ico', '.')],      # 아이콘 파일 포함
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
     noarchive=False,
 )
-pyz = PYZ(a.pure)
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
+    a.zipfiles,
     a.datas,
     [],
-    name='ImageToWebp',
+    name='이미지변환기',  # 파일명 지정 (한글도 가능)
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,
+    console=False,  # 콘솔창 숨김
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon.ico'],
+    icon='icon.ico',
 )
